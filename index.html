@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ModelVault</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-inner">
+      <div class="nav-brand">
+        <span class="brand-icon">◆</span>
+        <span class="brand-text">ModelVault</span>
+      </div>
+      <div class="nav-links">
+        <button class="nav-btn active" data-tab="gallery">Gallery</button>
+        <button class="nav-btn" data-tab="generator">AI Generator</button>
+      </div>
+      <div class="nav-actions">
+        <label class="upload-btn">
+          <input type="file" id="imageUpload" accept="image/*" multiple hidden>
+          <span>+ Upload</span>
+        </label>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <!-- GALLERY TAB -->
+    <section id="gallery" class="tab-content active">
+      <div class="gallery-header">
+        <h1>My Collection</h1>
+        <div class="filter-bar">
+          <button class="filter-btn active" data-filter="all">All</button>
+          <button class="filter-btn" data-filter="sfw">SFW</button>
+          <button class="filter-btn" data-filter="nsfw">NSFW</button>
+        </div>
+        <div class="search-bar">
+          <input type="text" id="searchInput" placeholder="Search tags or descriptions...">
+        </div>
+      </div>
+      <div class="gallery-grid" id="galleryGrid">
+        <div class="empty-state">
+          <div class="empty-icon">📸</div>
+          <h2>No images yet</h2>
+          <p>Upload your first image or generate one with AI</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- GENERATOR TAB -->
+    <section id="generator" class="tab-content">
+      <div class="generator-container">
+        <div class="gen-left">
+          <h1>AI Image Generator</h1>
+          <p class="gen-subtitle">Describe what you want and let AI create it</p>
+          <div class="gen-form">
+            <div class="form-group">
+              <label for="promptInput">Prompt</label>
+              <textarea id="promptInput" rows="4" placeholder="e.g. a beautiful model in a red dress, studio lighting, professional photoshoot, high quality"></textarea>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="styleSelect">Style</label>
+                <select id="styleSelect">
+                  <option value="photorealistic">Photorealistic</option>
+                  <option value="cinematic">Cinematic</option>
+                  <option value="artistic">Artistic</option>
+                  <option value="anime">Anime</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="categorySelect">Category</label>
+                <select id="categorySelect">
+                  <option value="sfw">SFW</option>
+                  <option value="nsfw">NSFW</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Tags (comma separated)</label>
+              <input type="text" id="tagsInput" placeholder="beautiful, portrait, professional">
+            </div>
+            <button class="generate-btn" id="generateBtn">
+              <span class="btn-icon">✨</span>
+              Generate Image
+            </button>
+          </div>
+          <div class="generated-result" id="generatedResult" style="display:none;">
+            <img id="generatedImage" alt="Generated image">
+            <div class="gen-result-actions">
+              <button class="save-btn" id="saveGenerated">Save to Gallery</button>
+              <button class="regenerate-btn" id="regenerateBtn">Regenerate</button>
+            </div>
+          </div>
+        </div>
+        <div class="gen-right">
+          <div class="tips-card">
+            <h3>💡 Tips for better results</h3>
+            <ul>
+              <li>Be specific about lighting and mood</li>
+              <li>Include clothing/style details</li>
+              <li>Mention pose and expression</li>
+              <li>Add camera specs for realism</li>
+            </ul>
+          </div>
+          <div class="api-card">
+            <h3>🔑 API Setup</h3>
+            <p>This uses Hugging Face free inference. Optionally set your own key:</p>
+            <input type="text" id="apiKeyInput" placeholder="hf_your_api_key_here (optional)" class="api-input">
+            <button class="small-btn" id="saveApiKey">Save Key</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- IMAGE DETAIL MODAL -->
+  <div class="modal" id="imageModal">
+    <div class="modal-overlay"></div>
+    <div class="modal-content">
+      <button class="modal-close">&times;</button>
+      <img id="modalImage" alt="Full size image">
+      <div class="modal-info">
+        <div class="modal-badges">
+          <span class="badge" id="modalCategory"></span>
+          <span class="badge badge-date" id="modalDate"></span>
+        </div>
+        <div class="modal-tags" id="modalTags"></div>
+        <p id="modalPrompt"></p>
+        <div class="modal-actions">
+          <button class="delete-btn" id="deleteImage">Delete</button>
+          <button class="download-btn" id="downloadImage">Download</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/gallery.js"></script>
+  <script src="js/generator.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
